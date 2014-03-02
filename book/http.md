@@ -19,6 +19,7 @@ Node.js 提供了 **`http`** 模块来进行HTTP服务端与客户端操作。�
    
    1. req < IncomingMessage < Stream.Readable
      这是一个IncomingMessage类的实例，其包括了从客户端传来的数据。能获取到的数据如:   
+        
      ```javascript
        req.httpVersion           // http协议的版本号，一般为 1.1
        req.headers               // 请求头信息，包括 use-agent、accept、accept-encoding等一些信息。
@@ -31,6 +32,7 @@ Node.js 提供了 **`http`** 模块来进行HTTP服务端与客户端操作。�
      ```   
    2. res < ServerResponse < OutgoingMessage < Stream
      这是一个ServerResponse类的实例，它包含了要返回给客户端的信息:   
+        
      ```javascript
        res.socket       // res.socket === res.connection === req.socket === req.connection
        res.writeHead(statusCode, [headInfo])  // 返回给客户端的状态码及头部信息。别名: writeHeader
@@ -79,6 +81,7 @@ Node.js 提供了 **`http`** 模块来进行HTTP服务端与客户端操作。�
    
   1. req < ClientRequest < OutgoingMessage < Stream   
     req对象是一个**ClientRequest**的实例，它可以监听到` http.request `触发的事件，发送请求主体等。   
+
     ```javascript
       http.request()    // 第一个参数描述了请求的信息；第二个参数是一个接受到响应后的回调，非必需。
       <E: response>     // req可以监听到**response**事件，因而可以使用`on('response')`方法来处理响应。!!!**response**事件仅触发一次。
@@ -87,11 +90,12 @@ Node.js 提供了 **`http`** 模块来进行HTTP服务端与客户端操作。�
       <E: continue>     // **continue**事件，当服务器发送**100 Continue**时触发。
       <E: socket>       // **socket**事件，当request请求分配到一个**socket**时触发。
       req.write()       // 发送请求体
-      req.end()         // 请求发送结束。
+      req.end()         // 请求发送结束
       ...
     ```   
   2. res < IncomingMessage < Stream.Readable   
     res是当服务器响应请求时，用来获取响应的状态，头部和主体等信息。与作为HTTP服务端的**req**用法类似。   
+
     ```javascript
       <E: data>         // 当服务器发送响应数据到来时触发
       <E: error>        // 当出现错误时触发
