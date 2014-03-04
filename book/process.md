@@ -344,11 +344,31 @@
 这个数组的第一个参数是以秒为单位，第二个参数是以纳秒为单位。两者相加，即是更高精度的时间间隔。   
 
    
+---
+以下几个方法仅在**POSIX**(Linux/Uninx)系统下有效。
+   
+### getgid
+**process.getgit()** 返回用户组ID
 
+### setgid
+**process.setgit(id)** 设置用户组ID，参数可以是数字和字符串(用户组名)。
 
+### getuid
+**process.getuid()** 返回用户ID
 
+### setuid
+**process.setuid(id)** 设置用户ID，参数可以是数字和字符串(用户名)。
 
+### getgroups
+**process.getgroups** 返回所有的组ID的数组。
 
+### setgroups
+**process.setgroups(groups)** 添加额外的组。 
 
+### initgroups
+**process.initgroups(user, extra_group)** 初始化用户的组信息。
+   
+---
+   
 
-
+   
