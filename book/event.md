@@ -48,5 +48,14 @@ Node.js是一个事件驱动的平台，事件在Node.js中是一个非常重要
    
 
 ### 原理
-关于Node.js中事件监听器的原理，其简单模型可参看[seajs](https://github.com/seajs/seajs/blob/master/src/util-events.js)的事件处理。
+关于Node.js中事件监听器的原理，其简单模型可参看[seajs](https://github.com/seajs/seajs/blob/master/src/util-events.js)的事件处理。   
+
+   
+
+### Tips
+如果一个继承了**EventEmitter**的类的对象，使用` emit('error') `触发了一个错误事件，但没有监听者，将会抛出一个异常。这样会产生一个**uncaughtException**异常冒泡到[process](./process.md)对象。   
+   
+   
+
+
 

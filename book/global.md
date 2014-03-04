@@ -8,7 +8,7 @@
 **!!!**注意，直接在文件中使用***var***与在浏览器中表现不同，在**Node.js**文件中直接使用***var***声明的变量只是在这个文件中有效，而不像在浏览器中，会变成全局变量。
 
 #### process
-运行时进程对象**process**是全局的，参见[process](./process.md)
+运行时进程**process**对象是全局的，参见[process](./process.md)
 
 #### console
 用来打印输出的**console**对象是全局的，参见[console](./console.md)
@@ -19,7 +19,7 @@
 #### clearInterval
 定时器、定时器消除、循环定时器、循环定时器消除都是全局的，参见[Timers](./timers.md)
 
-#### <C: Buffer>
+#### Class: Buffer
 Node.js中的**Buffer**类是一个全局的，参见[Buffer](./buffer.md)
 
 #### require
