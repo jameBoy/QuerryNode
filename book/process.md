@@ -141,7 +141,209 @@
 而**process.argv**则为:   
 ```javascript
   ['/usr/local/bin/node', 'script.js', '--version', '-t', '123']
+```   
+
+   
+
+### abort
+当**process.abort()**方法被调用时，会使Node.js触发一个***abort***事件。这个方法的调用会使Node.js进程退出，并生成一个内核文件。
+
+   
+
+### chdir
+**process.chdir(directory)**会在运行时改变当前工作目录。如果传入参数错误或找不到路径，则会抛出一个异常。   
+用法示例:   
+```javascript
+    console.log('Starting directory: ' + process.cwd());
+    try {
+      process.chdir('/tmp');
+      console.log('New directory: ' + process.cwd());
+    }
+    catch (err) {
+      console.log('chdir: ' + err);
+    }
 ```
+
+   
+
+### cwd
+**process.cwd()**会返回当前进程的工作目录。   
+用法示例:   
+```javascript
+  console.log('当前工作目录是: ' + process.cwd());
+```
+
+   
+
+### env
+**process.env**存储了用户运行环境信息。   
+其中有:   
+  
+  * USER        // 用户名
+  * SHELL       // 用户运行的shell环境
+  * PATH        // 用户环境变量路径
+  * PWD         // 当前工作目录完整路径
+  * LANG        // 系统语言
+  * HOME        // 用户主目录
+  * OLDPWD      // 前一工作目录
+  * ...
+   
+
+### exit
+**process.exit([code])**当这个方法调用时，进程会退出，退出码为传入参数或者0。
+
+   
+
+### version
+**process.version**存储当前Node.js的版本号。
+
+   
+
+### versions
+**process.versions**是一个数组，里面存储了Node.js及其依赖类库的版本号。
+
+   
+
+### config
+**process.config**是一个存储了编绎当前Node.js执行文件的环境配置信息，相当于` ./configure `生成的内容。
+
+   
+
+### pid
+**process.pid**是一个存储当前进程号的数字。` console.log('pid: ' + process.pid) `。
+
+   
+
+### kill
+**process.kill(pid, [signal])**这个方法会发送一个信息量给目标进程，默认为**SIGTERM**。虽然它名字是**kill**，但它并不一定会杀死目标进程。
+
+   
+
+### title
+**process.title**是一个可以设置和读取的变量，是使用`ps`命令时的进程名字。   
+用法示例:   
+```javascript
+  // 在文件app.js中
+  process.title = 'node-allen';   // 设置进程名为: node-allen
+  process.stdin.resume();     // 保持进程不退出
+```   
+在使用` $ node app.js `后，在另一个终端里，使用`ps`:   
+```shell
+  $ ps | grep node
+  # 输出: 13779 ttys    0:00.08 node-allen
+```   
+
+   
+
+### arch
+**process.arch**当前运行电脑CPU的类型，可能的值有: **arm**, **ia21**, **x64**等。
+
+   
+
+### platform
+**process.platform**表示当前电脑运行的系统平台，可能的值有: **drawin**(mac osx), **freebsd**, **linux**, **win32**等
+
+   
+
+### memoryUsage
+**process.memoryUsage()**返回的是当前Node进程所占用的内存空间对象。   
+用法示例:   
+```
+  console.log(process.memoryUsage());
+  // { rss: 15106048, heapTotal: 7326976, heapUsed: 3059360 }
+  // rss是当前进程占用内存，headpTotal与heapUsed是v8的。
+```   
+
+   
+
+### nextTick
+**process.nextTick(callback)**的作用类似于` setTimeout(fn, 0) `, 但是它更高效。一般来说，它会在其它I/O事件触发前触发。   
+用法示例:   
+```javascript
+    function Tick() {
+      console.log('do tick one');
+
+      process.nextTick(function() {
+        console.log('inner next tick.');
+      });
+
+      setTimeout(function() {
+        console.log('setTimeout inner.');
+      }, 0);
+
+      console.log('do tick two.');
+    }
+
+    Tick.prototype.sayHello = function() {
+      console.log('say hello.');
+    };
+
+    process.nextTick(function() {
+      console.log('outter next tick.');
+    });
+
+    setTimeout(function() {
+      console.log('setTimeout outter.');
+    }, 0);
+
+    console.log('before new.');
+    var s = new Tick();
+    console.log('after new.');
+    s.sayHello();
+    console.log('after sayHello');
+```   
+上面的执行打印结果为:   
+```shell
+  before new.
+  do tick one
+  do tick two.
+  after new.
+  say hello.
+  after sayHello
+  outter next tick.
+  inner next tick.
+  setTimeout outter.
+  setTimeout inner.
+```   
+由上面结果可知，**process.nextTick**会在**setTimeout**之前执行，因为它会在下一次事件循环前调用，而不是直接压入事件循环队列。
+
+   
+
+### maxTickDepth
+因为**process.nextTick**会在下一次事件循环前调用，所以，不正确地使用**process.nextTick**可能会阻塞，使得事件队列不能触发。因而引入**process.maxTickDepth**来评估是否应该继续事件队列，而不是一直阻塞。
+
+   
+
+### umask
+**process.umask([mask])**可以用来读写Node.js创建文件权限的掩码。在Windows下可能基本不用了解文件权限，但在Linux/Unix下，文件权限是很重要的，它表示你是否可以对一个文件进行读或写。详细参见[fs](./fs.md)   
+用法示例:   
+```javascript
+  var oldmask, newmask = 0644;
+  oldmask = process.umask(newmask);
+  console.log('Changed umask from: ' + oldmask.toString(8) + ' to ' + newmask.toString(8));
+```   
+
+   
+
+### uptime
+**process.uptime()**这个方法返回当前Node进程已经运行的秒数。
+
+   
+
+### hrtime
+**process.hrtime()**返回的是一个高精度的时间间隔数组。因为CPU会分出时间片来分别执行不同的应用，所以，当我们使用类似于定时器这类定时监听回调时，其时间间隔并不准确。我们可以使用这个方法来获取一个更高精度的具体时间间隔。   
+用法示例:   
+```javascript
+  var time = process.hrtime();
+  setInterval(function() {
+    var diff = process.hrtime(time);
+    console.log(diff);
+    console.log(diff[0] * 1e9 + diff[1]);
+  }, 1000);
+```   
+这个数组的第一个参数是以秒为单位，第二个参数是以纳秒为单位。两者相加，即是更高精度的时间间隔。   
+
+   
 
 
 
