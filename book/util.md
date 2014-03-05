@@ -1,9 +1,9 @@
 # util
 **util**模块提供了一系列工具类函数，需要` require('util') `来使用它。
 
-   
+------
 
-### API
+## API
 1. [util.inherits](#inherits)
 2. [util.format](#format)
 3. [util.inspect](#inspect)

@@ -6,4 +6,6 @@
 4. [Utilities](./util.md) util模块
 5. [Process](./process.md) process模块
 6. [os](./os.md) 系统信息
+7. [module](./module.md) 模块
+
 
