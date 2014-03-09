@@ -4,17 +4,17 @@
 ------
 
 ## API
-1. [util.inherits](#inherits)
-2. [util.format](#format)
-3. [util.inspect](#inspect)
-4. [util.log](#log)
-5. [util.isArray](#isArray)
-6. [util.deprecate](#deprecate)
+1. [util.inherits](#utilinherits)
+2. [util.format](#utilformat)
+3. [util.inspect](#utilinspect)
+4. [util.log](#utillog)
+5. [util.isArray](#utilisarray)
+6. [util.deprecate](#utildeprecate)
 7. ...
 
    
 
-### isherits
+### util.isherits
 Node对JavaScript继承的一个封装。典型用法   
 
 ```javascript
@@ -28,7 +28,7 @@ Node对JavaScript继承的一个封装。典型用法
 因为JavaScript原型继承很灵活，但很多实现都有自己各自的问题。这种方式是比较好的一种JavaScript使用继承的方式，推荐如上使用。   
    
 
-### format
+### util.format
 **util.format**被设计用来像C语言的**printf**函数风格，但它不输出而是返回格式化后的字符串。   
 ```javascript
   用法: util.format(format, [...]);  // 第一个参数是格式化模板，第二个参数是参数列表。
@@ -51,7 +51,7 @@ Node对JavaScript继承的一个封装。典型用法
 ```   
 **console.log**方法其实就是调用的这个方法来进行参数处理。唯一不同之处是**console.log**是输出，而**util.format**是返回格式化后的结果。   
    
-### inspect
+### util.inspect
 ` util.inspect(object, options) `是一个检测函数，对于JavaScript的基本类型，会直接返回。而对于对象类型，会检测其属性，并全部拼接成一个字符串返回。它有一个可选的参数**options**，用来描述检测和返回状态的一些条件。   
 **util.inspect**是**util.format**的基础。   
 ```javascript
@@ -68,7 +68,7 @@ Node对JavaScript继承的一个封装。典型用法
   console.log(result);
 ```
    
-### log
+### util.log
 ` util.log(str) `只是一个简单的对` console.log() `的封装，在输出的前面添加了时间缀。   
 用法:   
 ```javascript
@@ -78,7 +78,7 @@ Node对JavaScript继承的一个封装。典型用法
 
    
 
-### isArray
+### util.isArray
 ` util.isArray `相当于` Array.isArray `的一个别名，用来判断一个对象是否为数组。   
 类似的函数还有:   
 ```javascript
@@ -100,7 +100,7 @@ Node对JavaScript继承的一个封装。典型用法
 
    
 
-### deprecate
+### util.deprecate
 ` util.deprecate `用来说明一个函数是被废弃的状态，不应该再被使用或者应该使用其它函数代替。   
 ```javascript
   var util = require('util');

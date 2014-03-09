@@ -53,8 +53,10 @@
   })
 ```
    
+------
 
-### stdout
+## API
+### process.stdout
 **process.stdout**是一个写到标准输出的可写流。
 **process.stdout**与**process.stderr**与Node.js中其它流不太一样，它们在写的时候，通常是阻塞的。   
 
@@ -72,12 +74,12 @@
 ```   
 详细参见[tty](./tty.md)
 
-### stderr
+### process.stderr
 如上[stdout](#stdout)所述。   
 
    
 
-### stdin
+### process.stdin
 **process.stdin**是一个对标准输入的只读流。在Node.js v0.10版本以前，流([stream](./stream.md))的处理有所不同。**process.stdin**可以兼容地使用旧的模式，参见[Node.js process.stdin](http://nodejs.org/api/process.html#process_process_stdin)。但是你在一个新项目应该尽量使用新的处理方式。   
 用法示例:   
 ```javascript
@@ -97,7 +99,7 @@
 
    
 
-### argv
+### process.argv
 **process.argv**这个对象存储的是命令行参数。   
 用法示例:   
 编写一个文件 processArgv.js , 内容如下。   
@@ -123,12 +125,12 @@
 
    
 
-### execPath
+### process.execPath
 **process.execPath**是一个存储了执行此进程的Node.js程序的绝对路径，如` /usr/local/bin/node `。   
 
    
 
-### execArgv
+### process.execArgv
 **process.execArgv**存储的是Node.js执行所带的参数，它不会出现在**process.argv**中。   
 用法示例:   
 ```shell
@@ -145,12 +147,12 @@
 
    
 
-### abort
+### process.abort
 当**process.abort()**方法被调用时，会使Node.js触发一个***abort***事件。这个方法的调用会使Node.js进程退出，并生成一个内核文件。
 
    
 
-### chdir
+### process.chdir
 **process.chdir(directory)**会在运行时改变当前工作目录。如果传入参数错误或找不到路径，则会抛出一个异常。   
 用法示例:   
 ```javascript
@@ -166,7 +168,7 @@
 
    
 
-### cwd
+### process.cwd
 **process.cwd()**会返回当前进程的工作目录。   
 用法示例:   
 ```javascript
@@ -175,7 +177,7 @@
 
    
 
-### env
+### process.env
 **process.env**存储了用户运行环境信息。   
 其中有:   
   
@@ -189,37 +191,37 @@
   * ...
    
 
-### exit
+### process.exit
 **process.exit([code])**当这个方法调用时，进程会退出，退出码为传入参数或者0。
 
    
 
-### version
+### process.version
 **process.version**存储当前Node.js的版本号。
 
    
 
-### versions
+### process.versions
 **process.versions**是一个数组，里面存储了Node.js及其依赖类库的版本号。
 
    
 
-### config
+### process.config
 **process.config**是一个存储了编绎当前Node.js执行文件的环境配置信息，相当于` ./configure `生成的内容。
 
    
 
-### pid
+### process.pid
 **process.pid**是一个存储当前进程号的数字。` console.log('pid: ' + process.pid) `。
 
    
 
-### kill
+### process.kill
 **process.kill(pid, [signal])**这个方法会发送一个信息量给目标进程，默认为**SIGTERM**。虽然它名字是**kill**，但它并不一定会杀死目标进程。
 
    
 
-### title
+### process.title
 **process.title**是一个可以设置和读取的变量，是使用`ps`命令时的进程名字。   
 用法示例:   
 ```javascript
@@ -233,19 +235,13 @@
   # 输出: 13779 ttys    0:00.08 node-allen
 ```   
 
-   
-
-### arch
+### process.arch
 **process.arch**当前运行电脑CPU的类型，可能的值有: **arm**, **ia21**, **x64**等。
 
-   
-
-### platform
+### process.platform
 **process.platform**表示当前电脑运行的系统平台，可能的值有: **drawin**(mac osx), **freebsd**, **linux**, **win32**等
 
-   
-
-### memoryUsage
+### process.memoryUsage
 **process.memoryUsage()**返回的是当前Node进程所占用的内存空间对象。   
 用法示例:   
 ```
@@ -254,9 +250,7 @@
   // rss是当前进程占用内存，headpTotal与heapUsed是v8的。
 ```   
 
-   
-
-### nextTick
+### process.nextTick
 **process.nextTick(callback)**的作用类似于` setTimeout(fn, 0) `, 但是它更高效。一般来说，它会在其它I/O事件触发前触发。   
 用法示例:   
 ```javascript
@@ -307,14 +301,10 @@
 ```   
 由上面结果可知，**process.nextTick**会在**setTimeout**之前执行，因为它会在下一次事件循环前调用，而不是直接压入事件循环队列。
 
-   
-
-### maxTickDepth
+### process.maxTickDepth
 因为**process.nextTick**会在下一次事件循环前调用，所以，不正确地使用**process.nextTick**可能会阻塞，使得事件队列不能触发。因而引入**process.maxTickDepth**来评估是否应该继续事件队列，而不是一直阻塞。
 
-   
-
-### umask
+### process.umask
 **process.umask([mask])**可以用来读写Node.js创建文件权限的掩码。在Windows下可能基本不用了解文件权限，但在Linux/Unix下，文件权限是很重要的，它表示你是否可以对一个文件进行读或写。详细参见[fs](./fs.md)   
 用法示例:   
 ```javascript
@@ -323,14 +313,10 @@
   console.log('Changed umask from: ' + oldmask.toString(8) + ' to ' + newmask.toString(8));
 ```   
 
-   
-
-### uptime
+### process.uptime
 **process.uptime()**这个方法返回当前Node进程已经运行的秒数。
 
-   
-
-### hrtime
+### process.hrtime
 **process.hrtime()**返回的是一个高精度的时间间隔数组。因为CPU会分出时间片来分别执行不同的应用，所以，当我们使用类似于定时器这类定时监听回调时，其时间间隔并不准确。我们可以使用这个方法来获取一个更高精度的具体时间间隔。   
 用法示例:   
 ```javascript
@@ -347,25 +333,25 @@
 ---
 以下几个方法仅在**POSIX**(Linux/Uninx)系统下有效。
    
-### getgid
+### process.getgid
 **process.getgit()** 返回用户组ID
 
-### setgid
+### process.setgid
 **process.setgit(id)** 设置用户组ID，参数可以是数字和字符串(用户组名)。
 
-### getuid
+### process.getuid
 **process.getuid()** 返回用户ID
 
-### setuid
+### process.setuid
 **process.setuid(id)** 设置用户ID，参数可以是数字和字符串(用户名)。
 
-### getgroups
+### process.getgroups
 **process.getgroups** 返回所有的组ID的数组。
 
-### setgroups
+### process.setgroups
 **process.setgroups(groups)** 添加额外的组。 
 
-### initgroups
+### process.initgroups
 **process.initgroups(user, extra_group)** 初始化用户的组信息。
    
 ---
