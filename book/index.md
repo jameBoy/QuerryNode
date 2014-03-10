@@ -8,6 +8,7 @@
 6. [os](./os.md) 系统信息
 7. [module](./module.md) 模块
 8. [path](./path.md) 路径
-8. [Console](./console.md) Console控制台
+9. [Console](./console.md) Console控制台
+10.[assert](./assert.md) Assert断言
 
 
