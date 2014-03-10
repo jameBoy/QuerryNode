@@ -3,7 +3,7 @@ Node.js是一个事件驱动的平台，事件在Node.js中是一个非常重要
 
 ------
 
-### 接口
+### API
 我们这里先来看看Node.js中的事件API。   
 
 1. addListener(event, listener)  

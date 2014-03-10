@@ -1,5 +1,5 @@
 # Querry Node
-Node.js内置API解析
+Node.js内置API分析，API最低兼容版本为**Node.js v0.10**。 
 
 ### 开始阅读
 [目录](./book/index.md)
