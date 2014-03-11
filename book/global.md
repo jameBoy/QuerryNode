@@ -37,7 +37,10 @@ Node.js中的**Buffer**类是一个全局的，参见[Buffer](./buffer.md)
 使用示例:   
 ```javascript
   var http = require('util');
-  util.log('Hello, Node.js!');
+  util.log('Hello, Node.js!' + module.filename);
+  exports.sayHello = function() {
+    console.log('Hello, Node.js!');
+  };
 ```   
    
 

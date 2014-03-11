@@ -9,6 +9,7 @@
 7. [module](./module.md) 模块
 8. [path](./path.md) 路径
 9. [Console](./console.md) Console控制台
-10.[assert](./assert.md) Assert断言
+10. [assert](./assert.md) Assert断言
+11. [timers](./timers.md) Timers定时器
 
 
