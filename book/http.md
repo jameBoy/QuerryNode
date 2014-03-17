@@ -1,7 +1,160 @@
 # HTTP
 Node.js 提供了 **`http`** 模块来进行HTTP服务端与客户端操作。为了满足各种不同的需要，Node的HTTP模块API被设计得很低级，只是进行流式处理和消息的解析，而且解析的结果基本是未作修改的原生态。
 
+------
+
+## API
+
+### http.createServer
+**createServer([requestListener])**创建一个HTTP服务器。
+
+### http.request
+**request(options, [callback])**创建一个HTTP客户端。
+
+
+### http.get
+**get(options, [callback])**创建一个GET请求的客户端。
+
+
+### http.globalAgent
+HTTP客户端全局的代理对象。
+
+
+### Class: http.Server
+事件:   
+```
+  * request                 有请求到来时触发，每个请求触发一次
+  * connection              TCP连接建立时触发
+  * close                   当此服务器关闭时触发
+  * checkContinue           当收到客户端发送带有Expect: 100-continue请求头时触发
+  * connect                 当客户端使用**CONNECT**方式发送请求时触发
+  * upgrade                 当客户端使用**UPGRADE**方式发送请求时触发
+  * clientError             当客户端链接触发错误事件时触发
+```
+
+#### server.listen
+  
+  1. **listen(port, [hostname], [backlog], [callback])** 监听某一端口
+    * port {Number}            监听的端口
+    * hostname {String}        监听的主机名或IP
+    * backlog {Number}         最大的等待连接数
+    * callback {Function}      添加到**listening**事件上的回调函数
+  2. **listen(path, [callback])** 监听socket文件
+    * path {String}            socket文件路径
+    * callback {Function}      添加到**listening**事件上的回调函数
+  3. **listen(handle, [callback])** 对特定带有处理方法对象的监听，如server或socket对象。
+    * handle {Object}          待处理的对象
+    * callback {Function}      添加到**listening**事件上的回调函数
+
+#### server.close
+**close([callback])** 停止服务端对新连接的接收
+
+
+#### server.setTimeout
+**setTimeout(msecs, callback)** 设置超时时间及处理函数   
+```
+  * msecs {Number}        超时时间，默认为2分钟
+  * callback {Function}   回调函数，当出现超时时调用
+```   
+
+#### server.timeout
+**timeout** {Number} 超时时间，默认为120000(2分钟)
+
+#### server.maxHeadersCount
+**maxHeadersCount** {Number} 是能接收的最大请求头信息大小
+
+
+### Class: http.ServerResponse
+事件:   
+```
+  * close                   当连接在res.end()方法调用之前或者是缓冲输出之前被终止了时触发
+  * finish                  当请求已经完全发离操作系统时触发，它不代表客户端已经收到信息
+```
+
+#### response.writeHead
+**writeHead(statusCode, [reasonPhrase], [headers])** 发送响应头给请求。   
+参数:   
+```
+  statusCode {Number}       响应状态码
+  reasonPhrase {String}     对响应状态的解释
+  headers {Object}          响应头
+```   
+用法示例:   
+```javascript
+  var http = require('http');
+  var server = http.createServer(function(req, res) {
+    res.writeHead(200, 'This is ok!', {'Content-Type': 'text/plain'});
+    res.end('OK');
+  });
+  server.listen(8088);
+```
+
+#### response.writeContinue
+**writeContinue()** 发送` HTTP/1.1 100 `头信息给客户端，表示应该继续发送请求体。
+
+#### response.setTimeout
+**setTimeout(msecs, callback)**设置响应超时。   
+```
+  * msecs {Number}          超时时间，毫秒
+  * callback {Function}     回调函数
+```
+
+#### response.setHeader
+**setHeader(name, value)** 设置单条响应头信息。如果已存在同名的值，则将其替换。   
+用法示例:   
+```
+  var http = require('http');
+  http.createServer(function(req, res) {
+    res.setHeader('Content-Type': 'text/html');
+    res.end('OK');
+  }).listen(8088);
+```
+
+#### response.removeHeader
+**removeHeader(name)** 删除单条响应头信息。与上面的` setHeader() `用法一致。
+
+#### response.getHeader
+**getHeader(name)** 在响应头缓存后且未发出之前，可以使用此方法来获取某单条头信息的值。
+
+#### response.write
+**write(chunk, [encoding])** 写数据到客户端。第一次调用时会发送所有已缓存的响应头，后续调用会以流式方式处理数据。   
+```
+  * chunk {String|Buffer}     写到客户端的数据
+  * encoding {String}         数据内容的字符编码，默认为utf8
+```   
+用法示例:   
+```javascript
+  var http = require('http');
+  http.createServer(function(req, res) {
+    res.writeHead(200, {'Content-Type': 'text/plain'});
+    res.write('Hello, Node.js!');
+    res.end();
+  }).listen(8088);
+```
+
+#### response.addTrailers
+**addTrailers(headers)** 添加后缀头信息(添加在响应后面的头信息)到响应。它只有在数据传输方式为` Transfer-Encoding:chunked `时有效。如在**HTTP 1.0**时，就会默认丢弃。当你需要使用**addTrailers**方法时，需要在头信息里添加`Trailer`头。   
+```javascript
+  var http = require('http');
+  http.createServer(function(req, res) {
+    res.writeHead(200, {
+      'Content-Type': 'text/html',
+      'Trailer': 'Content-MD5'
+    });
+    res.write('Hello, Node!');
+    res.addTrailers('Content-MD5': 'Hi,md5');
+    res.end();
+  }).listen(8088);
+```
+
+#### response.end
+**end([data], [encoding])** 当调用此方法时，标志着所有的头信息和响应体都已发送完毕，每个响应都必须调用此方法。当传递参数时，就相当于在结束响应前，调用了**write()**方法向客户端写了一次数据。
    
+
+
+------
+
+## 总结
 
 ### HTTP服务端
 当使用**http**模块构建服务端对外提供服务时，使用 **` http.createServer() `** 方法创建一个Server的实例。   
@@ -107,6 +260,5 @@ Node.js 提供了 **`http`** 模块来进行HTTP服务端与客户端操作。�
    
 ---
    
-### 实例
 
 
