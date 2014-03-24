@@ -1,40 +1,33 @@
-# SIGNAL
+# SIGNAL 信号量
 
 
 ### List
 
-     1     SIGHUP       terminate process    terminal line hangup
-     2     SIGINT       terminate process    interrupt program
-     3     SIGQUIT      create core image    quit program
-     4     SIGILL       create core image    illegal instruction
-     5     SIGTRAP      create core image    trace trap
-     6     SIGABRT      create core image    abort program (formerly SIGIOT)
-     7     SIGEMT       create core image    emulate instruction executed
-     8     SIGFPE       create core image    floating-point exception
-     9     SIGKILL      terminate process    kill program
-     10    SIGBUS       create core image    bus error
-     11    SIGSEGV      create core image    segmentation violation
-     12    SIGSYS       create core image    non-existent system call invoked
-     13    SIGPIPE      terminate process    write on a pipe with no reader
-     14    SIGALRM      terminate process    real-time timer expired
-     15    SIGTERM      terminate process    software termination signal
-     16    SIGURG       discard signal       urgent condition present on socket
-     17    SIGSTOP      stop process         stop (cannot be caught or ignored)
-     18    SIGTSTP      stop process         stop signal generated from keyboard
-     19    SIGCONT      discard signal       continue after stop
-     20    SIGCHLD      discard signal       child status has changed
-     21    SIGTTIN      stop process         background read attempted from control terminal
-     22    SIGTTOU      stop process         background write attempted to control terminal
-     23    SIGIO        discard signal       I/O is possible on a descriptor (see fcntl(2))
-     24    SIGXCPU      terminate process    cpu time limit exceeded (see setrlimit(2))
-     25    SIGXFSZ      terminate process    file size limit exceeded (see setrlimit(2))
-     26    SIGVTALRM    terminate process    virtual time alarm (see setitimer(2))
-     27    SIGPROF      terminate process    profiling timer alarm (see setitimer(2))
-     28    SIGWINCH     discard signal       Window size change
-     29    SIGINFO      discard signal       status request from keyboard
-     30    SIGUSR1      terminate process    User defined signal 1
-     31    SIGUSR2      terminate process    User defined signal 2
-
-
-
-
+```
+     *    SIGHUP       terminate process    终端检测到一个链接断开，将此信号发送给与该终端相关的控制进程
+     *    SIGINT       terminate process    用户按下断键(DELETE或Ctrl+C)
+     *    SIGQUIT      create core image    用户按下退出键(一般为Ctrl+\)
+     *    SIGILL       create core image    进程执行一条非法硬件指令
+     *    SIGTRAP      create core image    指示一个实现定义的硬件出错，常用来作断点debug
+     *    SIGABRT      create core image    进程异常终止
+     *    SIGFPE       create core image    算术异常，如除以0等
+     *    SIGKILL      terminate process    杀死程序
+     *    SIGBUS       create core image    实现定义的硬件故障，如内存故障等
+     *    SIGSEGV      create core image    非法内存引用
+     *    SIGSYS       create core image    无效系统调用
+     *    SIGPIPE      terminate process    写到管道时读进程已终止
+     *    SIGALRM      terminate process    计时器超时
+     *    SIGTERM      terminate process    系统默认终止信号
+     *    SIGURG       discard signal       系统通知进程有紧急情况
+     *    SIGSTOP      stop process         停止信号，用于作业控制停止一个进程
+     *    SIGTSTP      stop process         交互停止信号，当用户在终端按下挂起键(如Ctrl+Z)时
+     *    SIGCONT      discard signal       停止状态进程继续运行的信号
+     *    SIGCHLD      discard signal       子进程终止或停止时，发送给父进程
+     *    SIGTTIN      stop process         后台进程试图读取控制终端
+     *    SIGTTOU      stop process         后台进程试图写入控制终端
+     *    SIGIO        discard signal       指示一个异步IO事件
+     *    SIGXCPU      terminate process    进程超过了其软CPU时间限制
+     *    SIGXFSZ      terminate process    进程超过了其软文件长度限制
+     *    SIGUSR1      terminate process    用户定义信号1
+     *    SIGUSR2      terminate process    用户定义信号2
+```
