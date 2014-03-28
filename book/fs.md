@@ -18,6 +18,8 @@
   * flags {String}                打开文件方式标志
   * mode {String|Number}          [可选]打开的文件的权限，默认为0666。
   * callback {Function} (err, fd) 回调函数
+    - err                           打开文件出错时的错误对象
+    - fd                            打开文件的文件描述符
 ```
 标志**flags**可选值有12个，为
 > 'r', 'r+', 'rs', 'rs+', 'w', 'wx', 'w+', 'wx+', 'a', 'ax', 'a+', 'ax+'
@@ -105,9 +107,9 @@
   * length {Number}       从Buffer中读取写内容的长度
   * position {Number}     在文件中开始写的位置
   * callback {Function}   回调函数
-      err {Error}             写入文件出错时的错误对象
-      written {Number}        已写到文件中的字节数
-      buffer {Buffer}         存储内容的Buffer对象
+    - err {Error}             写入文件出错时的错误对象
+    - written {Number}        已写到文件中的字节数
+    - buffer {Buffer}         存储内容的Buffer对象
 ```
 
 用法示例:   
@@ -187,7 +189,7 @@
   * data {String|Buffer}      待写入的内容
   * options {Object}          [可选]追加文件时的选项
     - encoding {String}         字符编码(当内容为字符串时)，默认为'utf8'。如果内容为Buffer时，忽略此参数
-    - mode {Number}             追加写入文件的权限，默认为438(八进制0666)
+    - mode {String|Number}      追加写入文件的权限，默认为438(八进制0666)
     - flag {String}             追加写入文件的方式，默认为'a'
   * callback {Function}       回调函数
     -err {Error}                追加文件出错时的错误对象
@@ -208,7 +210,7 @@
 参数解析:   
 ```
   * path {String}            待创建目录路径
-  * mode {String}            待创建目录权限
+  * mode {String|Number}     [可选]待创建目录权限
   * callback {Function}      回调函数
     - err {Error}              创建目录出错时错误对象
 ```
