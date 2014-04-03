@@ -5,8 +5,6 @@
 
 ## API
 
-------
-
 ### net.createServer
 **createServer([options], [listener])**用于创建一个新的TCP服务器
 
@@ -201,7 +199,7 @@ Node进程不退出。
 
 ------
 
-### net.Socket {Class}
+## net.Socket {Class}
 这是TCP与Unix套接字的一个抽象，它实现了一个双向流。使用` net.connect() `返回值以及在net.Server中回调函数里
 传入的参数都是net.Socket对象。
 

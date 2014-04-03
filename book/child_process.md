@@ -6,8 +6,10 @@ Node.js及浏览器端的JavaScript都是运行在单进程中的，这样对于
 ## API
 
 ### child_process.spawn
-**spawn(command, [args], [options])**方法是**child_process**模块中很重要的一个方法，此模块中的其它几个方法都是基于它修改而来。**spawn**方法会创建一个子进程来执行命令。   
-参数详解:   
+**spawn(command, [args], [options])**方法是**child_process**模块中很重要的一个方法，
+此模块中的其它几个方法都是基于它修改而来。**spawn**方法会创建一个子进程来执行命令。   
+
+参数详解:
 ```  
   * command {String}        要运行的命令
   * args {Array}            [可选]一个字符串形式的参数数组，如果为空，则默认为一个空的数组
@@ -20,7 +22,8 @@ Node.js及浏览器端的JavaScript都是运行在单进程中的，这样对于
     * gid {Number}             子进程的组ID
   + return {ChildProcess}   返回一个**ChildProcess对象  
 ```   
-用法示例:   
+
+用法示例:
 ```javascript
   var spawn = require('child_process').spawn;
   var ls = spawn('ls', ['-al', '/usr']);
@@ -36,9 +39,11 @@ Node.js及浏览器端的JavaScript都是运行在单进程中的，这样对于
 ```
 
 如果**detached**选项被设置了，子进程将会成为一个新进程组的管理者。它使得在父进程退出后子进程仍然可以运行。
-默认情况下，父进程会等待使用了**detached**选项的子进程退出。可以使用**child.unref()**方法来阻止父进程等待这样的子进程，这个方法会使父进程的循环引用计数中不包括这个子进程。   
+默认情况下，父进程会等待使用了**detached**选项的子进程退出。
+可以使用**child.unref()**方法来阻止父进程等待这样的子进程，这个方法会使父进程的循环引用计数中不包括这个子进程。
 
-当使用**detached**选项来开启一个长时间运行的进程，除非它的**stdio**配置与父进程的没有联系，否则它不会保持在后台运行。如果它继承了父进程的**stdio**，那么这个子进程将会保持联接在控制终端。
+当使用**detached**选项来开启一个长时间运行的进程，除非它的**stdio**配置与父进程的没有联系，
+否则它不会保持在后台运行。如果它继承了父进程的**stdio**，那么这个子进程将会保持联接在控制终端。
 
 #### stdio
 **stdio**选项是子进程中一个数组对象，其每个索引对应于一个文件描述符。它的值有:   
@@ -91,8 +96,9 @@ Node.js及浏览器端的JavaScript都是运行在单进程中的，这样对于
 
 
 ### child_process.execFile
-**execFile(file, [args], [options], [callback])**可以用来执行一个可执行的文件，它的用法和上面的**exec**相似，只是一个执行文件，一个执行命令。   
-参数:   
+**execFile(file, [args], [options], [callback])**可以用来执行一个可执行的文件，
+它的用法和上面的**exec**相似，只是一个执行文件，一个执行命令。
+参数解析:
 ```
   * file {String}              要运行的可执行文件
   * args {Array}               [可选]运行参数
@@ -108,8 +114,9 @@ Node.js及浏览器端的JavaScript都是运行在单进程中的，这样对于
     * stdout {Buffer}            子进程标准输出
     * stderr {Buffer}            子进程标准错误输出
   + return {ChildProcess}      返回子进程对象
-```   
-用法示例:   
+```
+
+用法示例:
 ```javascript
   #! /usr/bin/env node
 
@@ -125,8 +132,9 @@ Node.js及浏览器端的JavaScript都是运行在单进程中的，这样对于
 ```
 
 ### child_process.fork
-**fork(modulePath, [args], [options])**命令会在创建的子进程中执行参数文件里的内容。这与使用` node xxx.js `的形为大致相同。   
-参数:   
+**fork(modulePath, [args], [options])**命令会在创建的子进程中执行参数文件里的内容。这与使用` node xxx.js `的形为大致相同。
+
+参数解析:
 ```
   * modulePath {String}           要在子进程中运行的模块
   * args {Array}                  [可选]运行参数
@@ -140,11 +148,11 @@ Node.js及浏览器端的JavaScript都是运行在单进程中的，这样对于
   + return {ChildProcess}         返回子进程对象
 ```
 
-用法示例:   
+用法示例:
 ```javascript
   // a.js
   console.log('This is a.js!');
-```   
+```
 ```javascript
   // b.js
   var fork = require('child_process').fork;
@@ -153,13 +161,13 @@ Node.js及浏览器端的JavaScript都是运行在单进程中的，这样对于
   // child.stdout.on('data', function(data) {
   //   console.log(data);       // 输出: This is a.js!
   // });
-```   
+```
 
 ------
 
 ### Tips
 
- 1. 因为子进程总是会创建一个新的V8实例，而创建一个V8实例会消耗大约30毫秒的启动时间与10M的内存空间。所以，尽量少使用子进程。
+ + 因为子进程总是会创建一个新的V8实例，而创建一个V8实例会消耗大约30毫秒的启动时间与10M的内存空间。所以，尽量少使用子进程。
 
 
 
