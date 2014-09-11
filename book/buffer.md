@@ -66,8 +66,8 @@ Buffer类有多种构造函数。分别为:
 用法示例:
 ```js
   var b = new Buffer(1);
-  console.log(Buffer.isBuffer(b));
-  console.log(Buffer.isBuffer(null));
+  console.log(Buffer.isBuffer(b)); // true
+  console.log(Buffer.isBuffer(null)); // false
 ```
 
 ### Buffer.byteLength
@@ -77,7 +77,7 @@ Buffer类有多种构造函数。分别为:
 ```
   * string {String}       待检测的字符串
   * encoding {String}     字符串的编码格式，默认为utf8
-  + return {Number}       字符串所占用的字节数
+  + return {Number}       字符串所占用的字节数, 返回值与编码格式有关
 ```
 
 用法示例:
@@ -85,6 +85,8 @@ Buffer类有多种构造函数。分别为:
   var str = '你好,中国!';
   console.log(str.length);              // 6
   console.log(Buffer.byteLength(str));  // 14
+  console.log(Buffer.byteLength(str, 'utf8')); // 14
+  console.log(Buffer.byteLength(str, 'ascii')); // 6
 ```
 
 ### Buffer.concat
@@ -97,12 +99,12 @@ Buffer类有多种构造函数。分别为:
   * return {Buffer}         接接完成后的Buffer对象
 ```
 
-当不提供totalLength时，Node会循环遍历所有Buffer对象的长度进行累加。如果提供了totalLength，
-但totalLength大于实际总长度，则会拼接所有Buffer对象，剩余空间会是一些随机值；
-如果totalLength长度小于实际总长度，则会有以下两种情况:
+拼接多个Buffer对象，当不提供totalLength时，Node会循环遍历所有Buffer对象的长度进行累加，建议添加totalLength。
+如果list为空，则返回一个长度为0的Buffer对象。   
+如果list只有一个元素，则返回这个元素，不理会totalLength的大小。   
+如果list超过一个元素，则进行拼接，此时如果提供了totalLength，则会影响到拼接效果！
 
-  1. totalLength 大于直到倒数第二个Buffer对象的长度，则剩余空间拼接最后一个Buffer对象的前某些字节。
-  2. totalLength 小于直到倒数第二个Buffer对象的长度，则抛出一个错误。
+**!注意**， 如果totalLength长度不够，使得list的最后一个元素无法参与拼接，则会抛出一个错误(这个Bug已在0.11.x中修复，将不会再抛出错误!)。见下例:
 
 用法示例:
 ```js
@@ -113,7 +115,8 @@ Buffer类有多种构造函数。分别为:
   var arr = [buf1, buf2];
   var buf = Buffer.concat(arr);      // 'Hello, node.js!Hello, world.'
   // var buf = Buffer.concat(arr, (len1 + len2 - 2));   // 'Hello, node.js!Hello, worl'
-  // var buf = Buffer.concat(arr, len1);       // throw new RangeError('targetStart out of bounds');
+  
+  // var buf = Buffer.concat(arr, len1);       // throw new RangeError('targetStart out of bounds');  #Fixed at 0.11.x
 ```
 
 

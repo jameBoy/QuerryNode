@@ -12,11 +12,18 @@
 6. [util.deprecate](#utildeprecate)
 7. ...
 
-   
+------
 
-### util.isherits
-Node对JavaScript继承的一个封装。典型用法   
+### util.inherits
+**inherits(constructor, superConstructor)**Node对JavaScript继承的一个封装。
 
+参数解析:
+```
+  * constructor {Object}       当前构造函数
+  * superConstructor {Object}   父类构造函数
+```
+
+用法示例:
 ```javascript
   var Event = require('event').EventEmitter;
   var MyClass = function() {
@@ -26,21 +33,21 @@ Node对JavaScript继承的一个封装。典型用法
 ```  
 
 因为JavaScript原型继承很灵活，但很多实现都有自己各自的问题。这种方式是比较好的一种JavaScript使用继承的方式，推荐如上使用。   
-   
 
 ### util.format
-**util.format**被设计用来像C语言的**printf**函数风格，但它不输出而是返回格式化后的字符串。   
-```javascript
-  用法: util.format(format, [...]);  // 第一个参数是格式化模板，第二个参数是参数列表。
-       util.format('%s: %s', 'Name', 'Allen');
-  主要置位符:
-      %s  ---  字符串
-      %d  ---  数字
-      %j  ---  JSON文本
+**util.format(format, [...])**被设计用来像C语言的**printf**函数风格，但它不输出而是返回格式化后的字符串。
+
+参数解析:
+```
+  * format {String}              格式化模板
+    - %s  ---  字符串
+    - %d  ---  数字
+    - %j  ---  JSON文本
+  * ... {String|Number|JSON|%}   待替换的参数
 ```   
    
-示例:   
-```javascript
+用法示例:   
+```js
   var util = require('util');
   var obj = { x: 3 };
   console.log('obj: ' + obj);           // 输出: obj:[object Object]
@@ -48,21 +55,27 @@ Node对JavaScript继承的一个封装。典型用法
   console.log('obj.x = %d', obj.x);     // 输出: obj.x = 3
   console.log(util.format('obj', obj)); // 输出: obj: { x: 3 }
   console.log(uti.format('obj.x = %d', obj.x))  // 输出: obj.x = 3
-```   
-**console.log**方法其实就是调用的这个方法来进行参数处理。唯一不同之处是**console.log**是输出，而**util.format**是返回格式化后的结果。   
-   
+```
+**console.log**方法其实就是调用的这个方法来进行参数处理。
+唯一不同之处是**console.log**是输出，而**util.format**是返回格式化后的结果。   
+
 ### util.inspect
-` util.inspect(object, options) `是一个检测函数，对于JavaScript的基本类型，会直接返回。而对于对象类型，会检测其属性，并全部拼接成一个字符串返回。它有一个可选的参数**options**，用来描述检测和返回状态的一些条件。   
-**util.inspect**是**util.format**的基础。   
-```javascript
-  options参数是一个对象，它有如下几个属性:
-    showHidden       // 默认为false; 如果为true的话，即使不可枚举的属性也会列出来。
-    depth            // 默认为2, 递归深度。可以设置为null, 即所有子属性都列举出来。
-    colors           // 默认为false, 如果改为true的话, 就会用ANSI颜色将返回字符串样式化。
-    customInspect    // 默认为true, 是否使用自定义的**inspect**函数。如果为false，则强制使用util的。
-```   
-用法:   
-```javascript
+` util.inspect(object, options) `是一个检测函数，对于JavaScript的基本类型，会直接返回。
+而对于对象类型，会检测其属性，并全部拼接成一个字符串返回。它有一个可选的参数**options**，用来描述检测和返回状态的一些条件。   
+**util.inspect**是**util.format**的基础。
+
+参数解析:
+```
+  * object {Object}         待检测的参数
+  * options {Object}        参数是一个对象，它有如下几个属性:
+    - showHidden {Boolean}    默认为false; 如果为true的话，即使不可枚举的属性也会列出来。
+    - depth {Number|null}     默认为2, 递归深度。可以设置为null, 即所有子属性都列举出来。
+    - colors {Boolean}        默认为false, 如果改为true的话, 就会用ANSI颜色将返回字符串样式化。
+    - customInspect {Boolean} 默认为true, 是否使用自定义的**inspect**函数。如果为false，则强制使用util的。
+```
+
+用法示例:   
+```js
   var util = require('util');
   var result = util.inspect(util, { showHidden: true, depth: null });
   console.log(result);
@@ -70,18 +83,18 @@ Node对JavaScript继承的一个封装。典型用法
    
 ### util.log
 ` util.log(str) `只是一个简单的对` console.log() `的封装，在输出的前面添加了时间缀。   
-用法:   
-```javascript
+
+用法示例:   
+```js
   var util = require('util');
   util.log('Hello world!');
-```   
-
-   
+```
 
 ### util.isArray
 ` util.isArray `相当于` Array.isArray `的一个别名，用来判断一个对象是否为数组。   
-类似的函数还有:   
-```javascript
+类似的函数还有:
+
+```
   util.isBoolean();         // 判断是否为布尔类型
   util.isNull();            // 判断是否为空
   util.isNullOrUndefined()  // 判断是否为空或者未定义
@@ -96,13 +109,13 @@ Node对JavaScript继承的一个封装。典型用法
   util.isFunction();        // 判断是否为函数
   util.isPrimitive();       // 判断是否为基本类型
   util.isBuffer();          // 判断是否为Buffer类型
-```   
-
-   
+```
 
 ### util.deprecate
-` util.deprecate `用来说明一个函数是被废弃的状态，不应该再被使用或者应该使用其它函数代替。   
-```javascript
+` util.deprecate `用来说明一个函数是被废弃的状态，不应该再被使用或者应该使用其它函数代替。
+
+用法示例:
+```js
   var util = require('util');
   var abc = util.deprecate(function() {
     console.log('adc');

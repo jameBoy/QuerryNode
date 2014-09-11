@@ -45,11 +45,11 @@ Node.js及浏览器端的JavaScript都是运行在单进程中的，这样对于
 当使用**detached**选项来开启一个长时间运行的进程，除非它的**stdio**配置与父进程的没有联系，
 否则它不会保持在后台运行。如果它继承了父进程的**stdio**，那么这个子进程将会保持联接在控制终端。
 
-#### stdio
+##### stdio
 **stdio**选项是子进程中一个数组对象，其每个索引对应于一个文件描述符。它的值有:   
 
   1. **pipe** - 在父子进程之间创建一个管道，其用一个**child_process**对象中形如`ChildProcess.stdio[fd]`的属性暴露给父进程端。管道创建文件描述符0-2对应于ChildProcess.`stdin`,`stdout`,`stderr`。
-  2. **ipc** - 在父子进程之间创建一个IPC通道来传递消息及文件描述符。一个子进程最多只能有一个IPC标准流描述符。设置了这个选项后可以使用ChildProcess.send()方法。如果子进程写入JSON格式消息到此文件描述符，会触发ChildProcess.on('message')。如果子进程是个Node.js程序，那么**process.send()**和**process.on('message')这两个方法将可以被使用。
+  2. **ipc** - 在父子进程之间创建一个IPC通道来传递消息及文件描述符。一个子进程最多只能有一个IPC标准流描述符。设置了这个选项后可以使用ChildProcess.send()方法。如果子进程写入JSON格式消息到此文件描述符，会触发ChildProcess.on('message')。如果子进程是个Node.js程序，那么**process.send()**和**process.on('message')**这两个方法将可以被使用。
   3. **ignore** - 在子进程中不设置文件描述符。注意，因为Node始终会为它复制的子进程打开文件描述符0-2，所以当这些都被设置为忽略时，它会将`/dev/null`绑定到子进程的文件描述符上。
   4. **Stream Object** - 与子进程共享指向tty、file、socket或pipe的可写或可读流。这个流下层的文件描述符将会复用给对应于标准流数组中索引的文件描述符。
   5. **正整数** - 这个正整数对应于父进程中打开的文件描述符。它会像流对象那样与子进程共享。
@@ -156,7 +156,7 @@ Node.js及浏览器端的JavaScript都是运行在单进程中的，这样对于
 ```javascript
   // b.js
   var fork = require('child_process').fork;
-  var child = fork('./a.js');   // 输出: This is a.js!
+  var child = fork('./a.js');
   // child.silent = true;
   // child.stdout.on('data', function(data) {
   //   console.log(data);       // 输出: This is a.js!
